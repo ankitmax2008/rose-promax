@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Rose Day</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Dancing Script', cursive; /* Romantic cursive font */
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%), url('https://www.transparenttextures.com/patterns/flowers.png'); /* Soft pink gradient with subtle floral overlay */
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            border: 4px solid #ff1493; /* Vibrant pink border for the main container */
+            border-radius: 25px;
+            padding: 20px;
+            box-shadow: 0 0 25px rgba(255, 20, 147, 0.3);
+            max-width: 90vw; /* Responsive width */
+            max-height: 90vh; /* Responsive height */
+            background: rgba(255, 255, 255, 0.1); /* Semi-transparent white for layering */
+        }
+
+        .tap-message {
+            font-size: 18px;
+            color: #ff4500; /* Orange-red for contrast */
+            margin-bottom: 20px;
+            animation: fadeIn 2s ease-in-out;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .rose {
+            width: 250px;
+            height: 250px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .rose:hover {
+            transform: scale(1.1);
+        }
+
+        .message-popup {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 15px;
+            border: 3px solid #ffb6c1; /* Light pink border with gold accent */
+            border-image: linear-gradient(45deg, #ffb6c1, #ffd700) 1;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+            font-size: 24px;
+            color: #dc143c; /* Crimson for romance */
+            animation: fadeIn 2s ease-in-out;
+            display: none; /* Initially hidden */
+            z-index: 10;
+            max-width: 80vw; /* Constrain width to prevent overflow */
+        }
+
+        .poem {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #8b4513 0%, #a0522d 50%, #cd853f 100%); /* Brownish-red parchment gradient */
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxmaWx0ZXIgaWQ9Im5vaXNlIj4KICAgICAgPGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuOSIgbnVtT2N0YXZlcz0iNCIgc3RpdGNoVGlsZXM9InN0aXRjaCIvPgogICAgPC9maWx0ZXI+CiAgPC9kZWZzPgogIDxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNub2lzZSkiIG9wYWNpdHk9IjAuMyIvPgo8L3N2Zz4='); /* Subtle noise texture for old paper effect */
+            padding: 30px;
+            border-radius: 20px;
+            border: 4px solid #654321; /* Dark brown border for aged look */
+            border-image: linear-gradient(45deg, #654321, #daa520) 1; /* Gold-brown gradient border */
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.1);
+            font-size: 18px;
+            color: #fffacd; /* Light cream for readability on dark background */
+            line-height: 1.6;
+            white-space: pre-line;
+            display: none; /* Initially hidden */
+            max-width: 400px; /* Constrain width to prevent overflow */
+            z-index: 20;
+        }
+
+        .line {
+            opacity: 0; /* Initially hidden for animation */
+            transition: opacity 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        /* More hearts and flowers in background for extra romance */
+        .floating-element {
+            position: absolute;
+            font-size: 20px;
+            animation: float 8s ease-in-out infinite;
+            opacity: 0.7;
+        }
+
+        .heart:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .heart:nth-child(2) { top: 20%; right: 15%; animation-delay: 1s; }
+        .heart:nth-child(3) { bottom: 20%; left: 20%; animation-delay: 2s; }
+        .heart:nth-child(4) { bottom: 10%; right: 10%; animation-delay: 3s; }
+        .heart:nth-child(5) { top: 30%; left: 5%; animation-delay: 4s; }
+        .heart:nth-child(6) { bottom: 30%; right: 5%; animation-delay: 5s; }
+
+        .flower:nth-child(1) { top: 15%; right: 20%; animation-delay: 0.5s; }
+        .flower:nth-child(2) { bottom: 15%; left: 15%; animation-delay: 1.5s; }
+        .flower:nth-child(3) { top: 40%; left: 25%; animation-delay: 2.5s; }
+        .flower:nth-child(4) { bottom: 40%; right: 25%; animation-delay: 3.5s; }
+        .flower:nth-child(5) { top: 5%; right: 5%; animation-delay: 4.5s; }
+        .flower:nth-child(6) { bottom: 5%; left: 5%; animation-delay: 5.5s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(5deg); }
+        }
+
+        /* Media queries for phone-friendliness */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+                max-width: 95vw;
+                max-height: 95vh;
+            }
+            .tap-message {
+                font-size: 16px;
+                margin-bottom: 15px;
+            }
+            .rose {
+                width: 200px;
+                height: 200px;
+            }
+            .message-popup {
+                font-size: 20px;
+                padding: 15px;
+                top: 15%;
+            }
+            .poem {
+                font-size: 16px;
+                padding: 20px;
+                max-width: 90vw;
+            }
+            .floating-element {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tap-message {
+                font-size: 14px;
+            }
+            .rose {
+                width: 150px;
+                height: 150px;
+            }
+            .message-popup {
+                font-size: 18px;
+                padding: 10px;
+            }
+            .poem {
+                font-size: 14px;
+                padding: 15px;
+            }
+            .floating-element {
+                font-size: 14px;
+            }
+        }
+
+        /* Media query for desktop-friendliness (larger screens) */
+        @media (min-width: 1200px) {
+            .container {
+                max-width: 600px; /* Fixed max width for desktops to keep it compact */
+                max-height: 80vh;
+            }
+            .tap-message {
+                font-size: 20px;
+            }
+            .rose {
+                width: 300px; /* Slightly larger for better visibility on big screens */
+                height: 300px;
+            }
+            .message-popup {
+                font-size: 26px;
+                padding: 25px;
+                max-width: 500px; /* Constrain to prevent overflow */
+            }
+            .poem {
+                font-size: 20px;
+                padding: 35px;
+                max-width: 450px; /* Constrain to a limited place */
+            }
+            .floating-element {
+                font-size: 24px; /* Larger for desktop impact */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- More floating hearts and flowers for romantic effect -->
+        <div class="floating-element heart">❤️</div>
+        <div class="floating-element heart">💖</div>
+        <div class="floating-element heart">💕</div>
+        <div class="floating-element heart">💗</div>
+        <div class="floating-element heart">💓</div>
+        <div class="floating-element heart">💘</div>
+        <div class="floating-element flower">🌸</div>
+        <div class="floating-element flower">🌹</div>
+        <div class="floating-element flower">🌺</div>
+        <div class="floating-element flower">🌷</div>
+        <div class="floating-element flower">🌼</div>
+        <div class="floating-element flower">💐</div>
+
+        <!-- Initial message popup -->
+        <div class="message-popup" id="messagePopup">
+            WISH YOU A HAPPY ROSE DAY MY LOVE 💕
+        </div>
+
+        <!-- Tap on Rose message -->
+        <div class="tap-message" id="tapMessage">
+            Tap on Rose
+        </div>
+
+        <!-- Realistic Cartoon-Style Rose SVG (more natural and romantic) -->
+        <svg class="rose" id="rose" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <radialGradient id="petalGradient" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" style="stop-color:#ff69b4;stop-opacity:1" />
+                    <stop offset="50%" style="stop-color:#ff1493;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#dc143c;stop-opacity:1" />
+                </radialGradient>
+                <radialGradient id="centerGradient" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" style="stop-color:#ffff00;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#ffd700;stop-opacity:1" />
+                </radialGradient>
+                <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.3"/>
+                </filter>
+            </defs>
+            <!-- Outer petals (more layered for realism) -->
+            <ellipse cx="100" cy="70" rx="35" ry="55" fill="url(#petalGradient)" transform="rotate(0 100 100)" filter="url(#shadow)" />
+            <ellipse cx="135" cy="100" rx="35" ry="55" fill="url(#petalGradient)" transform="rotate(45 100 100)" filter="url(#shadow)" />
+            <ellipse cx="100" cy="135" rx="35" ry="55" fill="url(#petalGradient)" transform="rotate(90 100 100)" filter="url(#shadow)" />
+            <ellipse cx="65" cy="100" rx="35" ry="55" fill="url(#petalGradient)" transform="rotate(135 100 100)" filter="url(#shadow)" />
+            <!-- Inner petals for fullness -->
+            <ellipse cx="100" cy="80" rx="25" ry="40" fill="url(#petalGradient)" transform="rotate(22.5 100 100)" />
+            <ellipse cx="120" cy="100" rx="25" ry="40" fill="url(#petalGradient)" transform="rotate(67.5 100 100)" />
+            <ellipse cx="100" cy="120" rx="25" ry="40" fill="url(#petalGradient)" transform="rotate(112.5 100 100)" />
+            <ellipse cx="80" cy="100" rx="25" ry="40" fill="url(#petalGradient)" transform="rotate(157.5 100 100)" />
+            <!-- Center -->
+            <circle cx="100" cy="100" r="18" fill="url(#centerGradient)" />
+            <!-- Stem -->
+            <rect x="95" y="118" width="10" height="70" fill="#228B22" rx="5" />
+            <!-- Leaves -->
+            <ellipse cx="80" cy="150" rx="18" ry="10" fill="#32CD32" transform="rotate(-30 80 150)" />
+            <ellipse cx="120" cy="160" rx="18" ry="10" fill="#32CD32" transform="rotate(30 120 160)" />
+        </svg>
+
+        <!-- Poem container with old paper background and line-by-line display -->
+        <div class="poem" id="poem">
+            <span class="line">My love, I know I caused you pain, ❤️</span><br>
+            <span class="line">And anger found its way again. ❤️</span><br>
+            <span class="line">I’m sorry for the words I missed, ❤️</span><br>
+            <span class="line">For moments lost, for fragile bliss. ❤️</span><br>
+            <br>
+            <span class="line">Still, my heart beats just for you, ❤️</span><br>
+            <span class="line">In every wrong, my love stayed true. ❤️</span><br>
+            <span class="line">Please take my hand, let wounds depart— ❤️</span><br>
+            <span class="line">I’m yours in soul, I’m yours in heart. ❤️</span>
+        </div>
+    </div>
+
+    <script>
+        // Show the initial message popup on page load
+        window.onload = function() {
+            document.getElementById('messagePopup').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('messagePopup').style.display = 'none';
+            }, 3000); // Hide after 3 seconds
+        };
+
+        // Add click event to the rose to show the poem and animate lines
+        document.getElementById('rose').addEventListener('click', function() {
+            const poem = document.getElementById('poem');
+            const tapMessage = document.getElementById('tapMessage');
+            poem.style.display = 'block';
+            tapMessage.style.display = 'none'; // Hide tap message after click
+
+            // Animate lines one by one
+            const lines = poem.querySelectorAll('.line');
+            lines.forEach((line, index) => {
+                setTimeout(() => {
+                    line.style.opacity = '1';
+                }, index * 1000); // 1 second delay between lines
+            });
+        });
+    </script>
+</body>
+</html>
